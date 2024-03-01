@@ -5,8 +5,35 @@
 	<script type="text/javascript" src="MVC/vista/js/funciones.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="MVC/vista/styles2.css">
-            <link rel="shortcut icon" href="MVC/vista/img2/logo.png"> 
+    <link rel="shortcut icon" href="MVC/vista/img2/logo.png"> 
 	<title>Star Visory</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            var form = document.getElementById("validationForm");
+            form.addEventListener("submit", event => {
+                var email = document.getElementById("emailReg");
+                var contraseña = document.getElementById("contraseñaReg");
+                var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                var isValidEmail = filter.test(email.value);
+                var isValidContraseña = contraseña.value.length >= 8;
+                if (!isValidEmail) {
+                    console.log("email not valid");
+                    email.classList.add("is-invalid");
+                } else {
+                    email.classList.remove("is-invalid");
+                }
+                if (!isValidContraseña) {
+                    console.log("Contraseña not valid");
+                    contraseña.classList.add("is-invalid");
+                } else {
+                    contraseña.classList.remove("is-invalid");
+                }
+                if (!(isValidEmail && isValidContraseña)) {
+                    event.preventDefault();
+                }
+            })
+        });
+    </script>
 </head>
 <body>
  
@@ -33,7 +60,7 @@
 		
 		<div class="form-box login">
 			<h2>Registro</h2>
-			<form action="MVC/modelo/registro_usuario.php" method="POST">
+			<form id="validationForm" action="MVC/modelo/registro_usuario.php" method="POST">
 				<div class="input-box">
 				   <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
 				   <input id="usuarioReg" name="usuario" type="text" onclick="showPlaceholderUsuarioReg()" onblur="hidePlaceholderUsuarioReg()" maxlength="6" required>
@@ -46,7 +73,7 @@
 				</div>
 				<div class="input-box">
 				   <span class="icon"><ion-icon name="key-outline"></ion-icon></span>
-				   <input id="contraseñaReg" type="password" name="contrasena" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" onclick="showPlaceholderContraReg()" onblur="hidePlaceholderContraReg()"required>
+				   <input id="contraseñaReg" type="password" name="contrasena" pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}" onclick="showPlaceholderContraReg()" onblur="hidePlaceholderContraReg()"required>
 				   <label>Contraseña</label>
 				</div>
 				<div class="Condiciones"><label><input type="checkbox" required>Aceptar terminos y Condiciones</input></label>
