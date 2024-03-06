@@ -5,8 +5,35 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script type="text/javascript" src="MVC/vista/js/funciones.js"></script>
 	<link rel="stylesheet" type="text/css" href="MVC/vista/styles2.css">
-            <link rel="shortcut icon" href="MVC/vista/img2/logo.png"> 
+    <link rel="shortcut icon" href="MVC/vista/img2/logo.png"> 
 	<title>Star Visory</title>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    var form = document.getElementById("validationForm");
+    form.addEventListener("submit", event => {
+        var email = document.getElementById("email");
+        var contraseña = document.getElementById("contraseña");
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var isValidEmail = filter.test(email.value);
+        var isValidContraseña = contraseña.value.length >= 8;
+        if (!isValidEmail) {
+            console.log("Email no válido");
+            email.classList.add("is-invalid");
+            event.preventDefault();
+        } else {
+            email.classList.remove("is-invalid");
+        }
+        if (!isValidContraseña) {
+            console.log("Contraseña no válida");
+            contraseña.classList.add("is-invalid");
+            event.preventDefault();
+        } else {
+            contraseña.classList.remove("is-invalid");
+        }
+    });
+});
+</script>
+
 </head>
 <body>
 	<nav class="menu"> 
@@ -32,7 +59,7 @@
 	<div class="wrapper">
 		<div class="form-box login">
 			<h2>Iniciar Sesión</h2>
-			<form action="MVC/modelo/login_usuario.php" method="POST">
+			<form id="validationForm" action="MVC/modelo/login_usuario.php" method="POST">
 				<div class="input-box">
 				   <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
 				   <input id="email" type="email" name="email" required>
